@@ -10,13 +10,15 @@ def clear_console():
     else:
         os.system('clear')  # For Unix/Linux/Mac
 
-def cPrint(text):
+def cPrint(text, delay):
     clear_console()
     print(text)
+    time.sleep(delay)
 
-def cInput(text):
+def cInput(text, delay):
     clear_console()
     return input(text)
+    time.sleep(delay)
 
 class Entity:
     def __init__(self, name, damageLow, damageHigh, health, inventory, itemEquipped):
@@ -66,7 +68,6 @@ class Entity:
 
 Player = Entity('Leank', 3, 10, 20, ['stick', 'fists', 'apple', 'steak'], 'fists')\
 
-cPrint('Welcome to The Legend of Zolda!')
-time.sleep(3)
-Player.name = cInput(f'Your current name is {Player.name}. What do you want your new name to be? \n ||: ')
+cPrint('Welcome to The Legend of Zolda!', 3)
+Player.name = cInput(f'Your current name is {Player.name}. What do you want your new name to be? \n ||: ', 1)
 
