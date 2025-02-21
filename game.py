@@ -10,6 +10,14 @@ def clear_console():
     else:
         os.system('clear')  # For Unix/Linux/Mac
 
+def cPrint(text):
+    clear_console()
+    print(text)
+
+def cInput(text):
+    clear_console()
+    return input(text)
+
 class Entity:
     def __init__(self, name, damageLow, damageHigh, health, inventory, itemEquipped):
         self.name = name
@@ -18,19 +26,19 @@ class Entity:
         self.health = health
         self.inventory = inventory
         self.itemEquipped = itemEquipped
-        self.abilityEquipped = 'King of Spades'
+        self.abilityEquipped = ''
 
     def attack(self):
         damageDealt = random.randint(self.damageLow, self.damageHigh)
         return damageDealt
     
     def heal(self, item):
-            if item.lower() == '1':
+            if item == '1':
                 clear_console()
                 print('You ate an apple and gained +5hp!')
                 return 5
                 
-            if item.lower() == '2':
+            if item == '2':
                 clear_console()
                 print('You ate an entire steak and gained +15hp!')
                 return 15
@@ -51,7 +59,14 @@ class Entity:
                 return True
             else:
                 return False
+    
+    def statCheck(self):
+        print(f'Name: {self.name} \n Health: {self.health} \n Damage low to high: {self.damageLow} - {self.damageHigh} \n Inventory: {self.inventory} \n Item Equipped: {self.itemEquipped}')
 
 
-test = Entity('Test', 3, 10, 20, ['stick', 'fists', 'apple', 'steak'], 'fists')
-test.abilityAttack()
+Player = Entity('Leank', 3, 10, 20, ['stick', 'fists', 'apple', 'steak'], 'fists')\
+
+cPrint('Welcome to The Legend of Zolda!')
+time.sleep(3)
+Player.name = cInput(f'Your current name is {Player.name}. What do you want your new name to be? \n ||: ')
+
