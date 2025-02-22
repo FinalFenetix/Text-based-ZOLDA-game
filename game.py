@@ -58,6 +58,8 @@ class Entity:
                 clear_console()
                 print('You ate an entire steak and gained +15hp!')
                 return 15
+
+            print(f'{self.name}s current health: {self.health}')
     
     def abilityAttack(self):
         koslist = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
@@ -108,12 +110,25 @@ def tutorial():
     cPrint(f'Lets see how much you remember, {Player.name}!', 2)
     global turn
     while turn:
-        pChoice = ChoiceList(['1. Attack', '2. Stat check'], ['1', '2'])
+        pChoice = ChoiceList(['1. Attack', '2. Stat check', '3. Change item', '4. heal'], ['1', '2', '3', '4'])
         if pChoice == '1':
             damage = Player.attack()
+            trainingDummy.health -= damage
+            cPrint(f'You hit {trainingDummy.name} for {damage} damage! \n{trainingDummy.name} health: {trainingDummy.health}', 2)
             turn = False
         
         if pChoice == '2':
             Player.statCheck(trainingDummy)
+
+        if pChoice == '3':
+            pass
+
+        if pChoice == '4':
+            if 'apple' in Player.inventory or 'steak' in Player.inventory:
+                Player.heal(ChoiceList(['1. apple', '2. steak'], ['1', '2']))
+                turn = False
+            
+            else:
+                cPrint('You dont have any health consumables!', 2)
 
 startUp()
