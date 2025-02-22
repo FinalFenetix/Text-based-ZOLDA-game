@@ -20,6 +20,20 @@ def cInput(text, delay):
     return input(text)
     time.sleep(delay)
 
+def ChoiceList(list, range):
+    print('NOTE: Use numbers to complete questions and actions')
+    for i in list:
+        print(i)
+    choice = ''
+    choice = input('||: ')
+    while choice not in range:
+        print('That isnt a valid option, sorry.')
+        choice = input('||: ')
+
+    return choice
+    
+
+
 class Entity:
     def __init__(self, name, damageLow, damageHigh, health, inventory, itemEquipped):
         self.name = name
@@ -62,12 +76,44 @@ class Entity:
             else:
                 return False
     
-    def statCheck(self):
-        print(f'Name: {self.name} \n Health: {self.health} \n Damage low to high: {self.damageLow} - {self.damageHigh} \n Inventory: {self.inventory} \n Item Equipped: {self.itemEquipped}')
+    def statCheck(self, enemy):
+        clear_console()
+        print(f'{Player.name}s health: {Player.health} \n{enemy.name} health: {enemy.health}')
+        print(f'Inventory: {Player.inventory}')
+        print(f'Current item equipped: {Player.itemEquipped}')
+        print(f'{Player.name} damage low to high: {Player.damageLow} - {Player.damageHigh}')
+        print(f'{enemy.name} damage low to high: {enemy.damageLow} - {enemy.damageHigh}')
 
 
-Player = Entity('Leank', 3, 10, 20, ['stick', 'fists', 'apple', 'steak'], 'fists')\
+gameState = ''
+turn = True
+Player = Entity('Leank', 3, 10, 20, ['stick', 'fists', 'apple', 'steak'], 'fists')
+trainingDummy = Entity('Training Dummy', 1, 3, 10, ['fists'], 'fists')
 
-cPrint('Welcome to The Legend of Zolda!', 3)
-Player.name = cInput(f'Your current name is {Player.name}. What do you want your new name to be? \n ||: ', 1)
+def startUp():
+    gameState = 'startUp'
+    cPrint('Welcome to The Legend of Zolda!', 3)
+    Player.name = cInput(f'Your current name is {Player.name}. What do you want your new name to be? \n ||: ', 1)
+    cPrint(f'Welcome {Player.name}, I trust that your slumber has made you forget your fighting capabilities, no?', 1)
+    pChoice = ChoiceList(['1. Yes', '2. No'], ['1', '2'])
+    
+    if pChoice == '1':
+        tutorial()
+    
+    else:
+        #game()
+        pass
 
+def tutorial():
+    cPrint(f'Lets see how much you remember, {Player.name}!', 2)
+    global turn
+    while turn:
+        pChoice = ChoiceList(['1. Attack', '2. Stat check'], ['1', '2'])
+        if pChoice == '1':
+            damage = Player.attack()
+            turn = False
+        
+        if pChoice == '2':
+            Player.statCheck(trainingDummy)
+
+startUp()
